@@ -8,4 +8,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+    /**
+     *
+     *
+     * Changes from irah-dev-red-section branch
+     *
+     *
+     * */
+
 }
