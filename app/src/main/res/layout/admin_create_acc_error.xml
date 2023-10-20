@@ -66,17 +66,29 @@
             android:textSize="16sp"
             android:layout_marginBottom="40sp"/>
 
-        <TextView
-            android:id="@+id/tv_proceedLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40sp"
-            android:elevation="8dp"
-            android:fontFamily="@font/lato"
-            android:gravity="center_horizontal"
-            android:text="Proceed to Login"
 
-            android:textSize="16sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_proceedLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3sp"
+                android:elevation="8dp"
+                android:fontFamily="@font/lato"
+                android:gravity="center_horizontal"
+                android:text="Proceed to Login"
+                android:textColor="#3089BB"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#3089BB" />
+        </LinearLayout>
 
 
     </LinearLayout>
