@@ -64,7 +64,7 @@
                     android:id="@+id/iv_student"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:src="@drawable/am_student_logo" />
+                    android:src="@drawable/activity_main_student_logo" />
 
                 <ImageView
                     android:id="@+id/iv_student_txt"
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
                     android:padding="5dp"
-                    android:src="@drawable/student_text" />
+                    android:src="@drawable/activity_main_student_text" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -101,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:cropToPadding="false"
-                    android:src="@drawable/am_admin_logo" />
+                    android:src="@drawable/activity_main_admin_logo" />
 
                 <ImageView
                     android:id="@+id/iv_admin_txt"
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
                     android:padding="5dp"
-                    android:src="@drawable/administrator_text" />
+                    android:src="@drawable/activity_main_administrator_text" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

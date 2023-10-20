@@ -28,12 +28,12 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/raining_vector" />
+            app:srcCompat="@drawable/start_screen_logo" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/umbrellasalle_logo"
+            android:src="@drawable/start_screen_umbrellasalle_logo"
             />
 
         <androidx.cardview.widget.CardView
@@ -49,7 +49,7 @@
                 android:id="@+id/bt_proceed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gradient_bg"
+                android:background="@drawable/general_irah_gradient_bg"
                 android:padding="0dp"
                 android:text="Create Your Account"
                 android:textSize="16sp"
@@ -72,7 +72,7 @@
                     android:cropToPadding="true"
                     android:importantForAccessibility="no"
                     android:layout_margin="13dp"
-                    android:src="@drawable/ss_login_txt"
+                    android:src="@drawable/startscreen_login_txt"
                     android:textColor="@color/black"
                     />
 
