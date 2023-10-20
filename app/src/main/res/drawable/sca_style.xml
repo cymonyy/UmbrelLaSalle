@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style
+    name="sca_style"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <item name="android:textColor">#FF5733" <!-- Change the text color as needed -->
+        <item name="android:textSize">16sp</item> <!-- Change the text size as needed -->
+        <item name="android:textStyle">italic</item> <!-- Change the text style as needed -->
+        <item name="android:marginLeft">10dp</item>
+</style>
