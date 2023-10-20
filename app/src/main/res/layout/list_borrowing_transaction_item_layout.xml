@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvStatusLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status: "
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvStatusValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Approved"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTransactionNumberLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transaction Number: "
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvTransactionNumberValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="02"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_stationLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Station: "
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_stationValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Gokongwei"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvEDRLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:text="Expected Date of Return:"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvEDRValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="October 26, 2023"
+                    android:textAlignment="textEnd"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:background="@color/gray" />
+
+        <TextView
+            android:id="@+id/tv_requestedItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Requested Items:"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50sp"
+            android:layout_marginEnd="50sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_umbrellaLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Umbrella"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_umbrellaValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="UM001"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50sp"
+            android:layout_marginEnd="50sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_coatLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Coat:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_coatValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="CT001"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50sp"
+            android:layout_marginEnd="50sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_bootsLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Boots:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_bootsValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BT001"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:background="@color/gray" />
+
+        <TextView
+            android:id="@+id/tv_daysLeftValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="7"
+            android:textAlignment="textEnd" />
+
+        <TextView
+            android:id="@+id/tv_daysLeftLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Days Left To Return"
+            android:textAlignment="textEnd" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
