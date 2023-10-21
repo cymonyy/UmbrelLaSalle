@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp"
-        minSdk = 23
+        minSdk = 34
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
