@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/studentCreateAccount_background">
+    android:background="@drawable/student_create_account_background">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
