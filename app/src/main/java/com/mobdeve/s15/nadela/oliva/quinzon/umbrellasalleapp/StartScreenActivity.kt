@@ -43,6 +43,12 @@ class StartScreenActivity : AppCompatActivity() {
             }
         })
 
+        this.viewBinding.cvBackButton.root.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+
+
+
 
     }
 
