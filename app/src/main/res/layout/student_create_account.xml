@@ -22,11 +22,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageView
-            android:id="@+id/imageView4"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/student_create_account_head" />
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center"
+            android:letterSpacing="0.2"
+            android:text="Hello!"
+            android:textSize="48sp" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

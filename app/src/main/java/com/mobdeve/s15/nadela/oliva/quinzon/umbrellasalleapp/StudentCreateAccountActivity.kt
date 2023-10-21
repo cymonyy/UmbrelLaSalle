@@ -14,7 +14,5 @@ class StudentCreateAccountActivity : AppCompatActivity() {
         setContentView(this.viewBinding.root)
 
 
-
-
     }
 }

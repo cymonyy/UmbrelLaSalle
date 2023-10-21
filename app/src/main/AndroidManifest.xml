@@ -19,6 +19,9 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".StudentCreateAccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminCreateAccountActivity"
             android:exported="false" />
         <activity

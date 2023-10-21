@@ -9,11 +9,11 @@ android {
 
     defaultConfig {
         applicationId = "com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp"
-        minSdk = 34
+        minSdk = 27
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
