@@ -37,6 +37,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    sourceSets{
+        getByName("main"){
+            res.srcDirs(
+                "src/main/res/layouts/components",
+                "src/main/res/layouts",
+                "src/main/res"
+
+            )
+        }
+    }
 }
 
 dependencies {
