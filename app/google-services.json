@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "36805062446",
+    "project_id": "umbrellasalle",
+    "storage_bucket": "umbrellasalle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36805062446:android:57c72ec81a75456944d4bf",
+        "android_client_info": {
+          "package_name": "com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALPY2jJ2gMxb7KXsAJP347000Dw39B8EM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
