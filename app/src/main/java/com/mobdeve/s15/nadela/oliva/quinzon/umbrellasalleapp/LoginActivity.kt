@@ -11,9 +11,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.viewBinding = AdminStudentLoginBinding.inflate(layoutInflater)
         setContentView(this.viewBinding.root)
-
-
-        this.viewBinding.etLoginNum.hint = intent.getStringExtra("user") + " Number"
     }
 
 }
