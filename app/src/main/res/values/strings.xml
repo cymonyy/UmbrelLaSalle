@@ -7,10 +7,12 @@
 
     <string-array name="register_email">
         <item>Please input your organization email.</item>
+        <item>Please input a valid and owned organization email.</item>
     </string-array>
 
     <string-array name="register_mobile">
         <item>Please input your mobile number.</item>
+        <item>Please input a valid mobile number format (e.g., 09123456789).</item>
     </string-array>
 
     <string-array name="register_password">
@@ -20,5 +22,4 @@
     <string-array name="register_confirm_password">
         <item>Please input confirm your password.</item>
     </string-array>
-
 </resources>
