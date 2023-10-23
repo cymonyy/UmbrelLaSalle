@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -14,8 +13,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
-import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.AdminStudentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.StudentCreateAccountBinding
+import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.UserModel
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -33,6 +37,9 @@ class StudentCreateAccountActivity : AppCompatActivity() {
     private lateinit var matcher: Matcher
     private var errorOccured = false
 
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var userRef: CollectionReference = db.collection("Users")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.viewBinding = StudentCreateAccountBinding.inflate(layoutInflater)
@@ -47,7 +54,7 @@ class StudentCreateAccountActivity : AppCompatActivity() {
 
 
         this.viewBinding.btProceed.setOnClickListener(View.OnClickListener {
-            val firstName = etFirstName.text
+            val firstName = etFirstName.text.toString()
             val lastName = etLastName.text.toString()
             val email = etEmail.text.toString()
             val mobileNumber = etMobile.text.toString()
@@ -77,7 +84,6 @@ class StudentCreateAccountActivity : AppCompatActivity() {
 
             //Email Errors
             pattern = Pattern.compile("[a-z](?:[a-z]+(_|\\.))+[a-z]+@dlsu.edu.ph") //DLSU email
-
             matcher = pattern.matcher(email)
             if(TextUtils.isEmpty(email)){
                 viewBinding.tvEmailError.visibility = View.VISIBLE
@@ -108,7 +114,7 @@ class StudentCreateAccountActivity : AppCompatActivity() {
                 parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
                 errorOccured = true
             }
-            else if(!matcher.find() || mobileNumber.length != 11){
+            else if(!matcher.matches()){
                 Log.d("matched", matcher.find().toString())
                 viewBinding.tvPhoneError.visibility = View.VISIBLE
                 viewBinding.tvPhoneError.text = resources.getStringArray(R.array.register_mobile)[1]
@@ -127,6 +133,14 @@ class StudentCreateAccountActivity : AppCompatActivity() {
                 parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
                 errorOccured = true
             }
+            else if(password.length <= 6){
+                viewBinding.tvPassError.visibility = View.VISIBLE
+                viewBinding.tvPassError.text = resources.getStringArray(R.array.register_password)[1]
+                val parentCard : MaterialCardView =  etPassword.parent as MaterialCardView
+                parentCard.strokeColor = Color.parseColor("#E31414")
+                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
+                errorOccured = true
+            }
 
             //Confirm Password Errors
             if(TextUtils.isEmpty(confirmPassword)){
@@ -137,7 +151,20 @@ class StudentCreateAccountActivity : AppCompatActivity() {
                 parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
                 errorOccured = true
             }
+            else if(!TextUtils.equals(password, confirmPassword)){
+                viewBinding.tvConfirmError.visibility = View.VISIBLE
+                viewBinding.tvConfirmError.text = resources.getStringArray(R.array.register_confirm_password)[1]
+                val parentCard : MaterialCardView =  etConfirmPass.parent as MaterialCardView
+                parentCard.strokeColor = Color.parseColor("#E31414")
+                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
+                errorOccured = true
+            }
+
+            if(!errorOccured){
+                registerStudent(lastName, firstName, email, mobileNumber, password)
+            }
         })
+
 
         etFirstName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -210,7 +237,61 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+    }
 
+    private fun registerStudent(lastName: String, firstName: String, email: String, mobileNumber: String, password: String){
+        val auth = FirebaseAuth.getInstance()
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val user = UserModel(lastName, firstName, email, mobileNumber, password)
+                user.id = auth.currentUser?.uid.toString()
+
+                userRef.document(user.id).set(user)
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            this@StudentCreateAccountActivity,
+                            "user created successfully",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, e.message.toString())
+                        Toast.makeText(
+                            this@StudentCreateAccountActivity,
+                            "Error!: " + e.message.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+            }
+            else{
+               try{
+                   throw task.exception!!
+               }catch (e: FirebaseAuthInvalidCredentialsException){
+                   viewBinding.tvEmailError.visibility = View.VISIBLE
+                   viewBinding.tvEmailError.text = resources.getStringArray(R.array.register_email)[2]
+                   val parentCard : MaterialCardView =  etEmail.parent as MaterialCardView
+                   parentCard.strokeColor = Color.parseColor("#E31414")
+                   parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
+                   errorOccured = true
+
+               } catch (e : FirebaseAuthUserCollisionException){
+                   viewBinding.tvEmailError.visibility = View.VISIBLE
+                   viewBinding.tvEmailError.text = resources.getStringArray(R.array.register_email)[3]
+                   val parentCard : MaterialCardView =  etEmail.parent as MaterialCardView
+                   parentCard.strokeColor = Color.parseColor("#E31414")
+                   parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
+                   errorOccured = true
+               } catch (e : Exception){
+                   Log.e(Companion.TAG, e.message.toString())
+                   Toast.makeText(this@StudentCreateAccountActivity, "Error! " + e.message.toString(), Toast.LENGTH_LONG).show()
+               }
+            }
+        }
+
+    }
+
+    companion object {
+        const val TAG : String = "RegisterActivity"
     }
 
 }

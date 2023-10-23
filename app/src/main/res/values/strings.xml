@@ -8,6 +8,8 @@
     <string-array name="register_email">
         <item>Please input your organization email.</item>
         <item>Please input a valid and owned organization email.</item>
+        <item>Your email is invalid or already in use. Please re-enter an email.</item>
+        <item>A user is already registered with this email. Kindly use another one.</item>
     </string-array>
 
     <string-array name="register_mobile">
@@ -17,9 +19,11 @@
 
     <string-array name="register_password">
         <item>Please input a password.</item>
+        <item>Your password is too weak! Please input a longer password.</item>
     </string-array>
 
     <string-array name="register_confirm_password">
         <item>Please input confirm your password.</item>
+        <item>Please confirm your password by matching them.</item>
     </string-array>
 </resources>
