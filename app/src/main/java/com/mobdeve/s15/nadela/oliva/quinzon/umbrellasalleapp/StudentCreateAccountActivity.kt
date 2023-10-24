@@ -3,6 +3,7 @@ package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Message
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -10,6 +11,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
@@ -64,42 +66,22 @@ class StudentCreateAccountActivity : AppCompatActivity() {
 
             //First Name Errors
             if(TextUtils.isEmpty(firstName)){
-                viewBinding.tvFirstNameError.visibility = View.VISIBLE
-                viewBinding.tvFirstNameError.text = resources.getStringArray(R.array.register_name)[0]
-                val parentCard : MaterialCardView =  etFirstName.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvFirstNameError, etFirstName, resources.getStringArray(R.array.register_name)[0])
             }
 
             //Last Name Errors
             if(TextUtils.isEmpty(lastName)){
-                viewBinding.tvLastNameError.visibility = View.VISIBLE
-                viewBinding.tvLastNameError.text = resources.getStringArray(R.array.register_name)[1]
-                val parentCard : MaterialCardView =  etLastName.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvLastNameError, etLastName, resources.getStringArray(R.array.register_name)[1])
             }
 
             //Email Errors
             pattern = Pattern.compile("[a-z](?:[a-z]+(_|\\.))+[a-z]+@dlsu.edu.ph") //DLSU email
             matcher = pattern.matcher(email)
             if(TextUtils.isEmpty(email)){
-                viewBinding.tvEmailError.visibility = View.VISIBLE
-                viewBinding.tvEmailError.text = resources.getStringArray(R.array.register_email)[0]
-                val parentCard : MaterialCardView =  etEmail.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvEmailError, etEmail, resources.getStringArray(R.array.register_email)[0])
             }
             else if(!matcher.matches()){
-                viewBinding.tvEmailError.visibility = View.VISIBLE
-                viewBinding.tvEmailError.text = resources.getStringArray(R.array.register_email)[1]
-                val parentCard : MaterialCardView =  etEmail.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvEmailError, etEmail, resources.getStringArray(R.array.register_email)[1])
             }
 
             //Mobile Number Errors
@@ -107,57 +89,26 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             pattern = Pattern.compile("09[0-9]{9}") //Philippines number
             matcher = pattern.matcher(mobileNumber)
             if(TextUtils.isEmpty(mobileNumber)){
-                viewBinding.tvPhoneError.visibility = View.VISIBLE
-                viewBinding.tvPhoneError.text = resources.getStringArray(R.array.register_mobile)[0]
-                val parentCard : MaterialCardView =  etMobile.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvPhoneError, etMobile, resources.getStringArray(R.array.register_mobile)[0])
             }
             else if(!matcher.matches()){
-                Log.d("matched", matcher.find().toString())
-                viewBinding.tvPhoneError.visibility = View.VISIBLE
-                viewBinding.tvPhoneError.text = resources.getStringArray(R.array.register_mobile)[1]
-                val parentCard : MaterialCardView =  etMobile.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvPhoneError, etMobile, resources.getStringArray(R.array.register_mobile)[1])
             }
 
             //Password Errors
             if(TextUtils.isEmpty(password)){
-                viewBinding.tvPassError.visibility = View.VISIBLE
-                viewBinding.tvPassError.text = resources.getStringArray(R.array.register_password)[0]
-                val parentCard : MaterialCardView =  etPassword.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvPassError, etPassword, resources.getStringArray(R.array.register_password)[0])
             }
             else if(password.length <= 6){
-                viewBinding.tvPassError.visibility = View.VISIBLE
-                viewBinding.tvPassError.text = resources.getStringArray(R.array.register_password)[1]
-                val parentCard : MaterialCardView =  etPassword.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvPassError, etPassword, resources.getStringArray(R.array.register_password)[1])
             }
 
             //Confirm Password Errors
             if(TextUtils.isEmpty(confirmPassword)){
-                viewBinding.tvConfirmError.visibility = View.VISIBLE
-                viewBinding.tvConfirmError.text = resources.getStringArray(R.array.register_confirm_password)[0]
-                val parentCard : MaterialCardView =  etConfirmPass.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvConfirmError, etConfirmPass, resources.getStringArray(R.array.register_confirm_password)[0])
             }
             else if(!TextUtils.equals(password, confirmPassword)){
-                viewBinding.tvConfirmError.visibility = View.VISIBLE
-                viewBinding.tvConfirmError.text = resources.getStringArray(R.array.register_confirm_password)[1]
-                val parentCard : MaterialCardView =  etConfirmPass.parent as MaterialCardView
-                parentCard.strokeColor = Color.parseColor("#E31414")
-                parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                errorOccured = true
+                triggerError(viewBinding.tvConfirmError, etConfirmPass, resources.getStringArray(R.array.register_confirm_password)[1])
             }
 
             if(!errorOccured){
@@ -170,10 +121,7 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             @SuppressLint("ResourceAsColor", "PrivateResource")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewBinding.tvFirstNameError.visibility = View.GONE
-                val parentCard : MaterialCardView =  etFirstName.parent as MaterialCardView
-                parentCard.strokeWidth = 0
-                errorOccured = false
+                cancelError(viewBinding.tvFirstNameError, etFirstName)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -182,10 +130,7 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             @SuppressLint("ResourceAsColor", "PrivateResource")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewBinding.tvLastNameError.visibility = View.GONE
-                val parentCard : MaterialCardView =  etLastName.parent as MaterialCardView
-                parentCard.strokeWidth = 0
-                errorOccured = false
+                cancelError(viewBinding.tvLastNameError, etLastName)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -194,10 +139,7 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             @SuppressLint("ResourceAsColor", "PrivateResource")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewBinding.tvEmailError.visibility = View.GONE
-                val parentCard : MaterialCardView =  etEmail.parent as MaterialCardView
-                parentCard.strokeWidth = 0
-                errorOccured = false
+                cancelError(viewBinding.tvEmailError, etEmail)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -206,10 +148,7 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             @SuppressLint("ResourceAsColor", "PrivateResource")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewBinding.tvPhoneError.visibility = View.GONE
-                val parentCard : MaterialCardView =  etMobile.parent as MaterialCardView
-                parentCard.strokeWidth = 0
-                errorOccured = false
+                cancelError(viewBinding.tvPhoneError, etMobile)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -218,10 +157,7 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             @SuppressLint("ResourceAsColor", "PrivateResource")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewBinding.tvPassError.visibility = View.GONE
-                val parentCard : MaterialCardView =  etPassword.parent as MaterialCardView
-                parentCard.strokeWidth = 0
-                errorOccured = false
+                cancelError(viewBinding.tvPassError, etPassword)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -230,13 +166,26 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             @SuppressLint("ResourceAsColor", "PrivateResource")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewBinding.tvConfirmError.visibility = View.GONE
-                val parentCard : MaterialCardView =  etConfirmPass.parent as MaterialCardView
-                parentCard.strokeWidth = 0
-                errorOccured = false
+                cancelError(viewBinding.tvConfirmError, etConfirmPass)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+    }
+
+    private fun triggerError(textView: TextView, editText: EditText, message: String){
+        textView.visibility = View.VISIBLE
+        textView.text = message
+        val parentCard : MaterialCardView =  editText.parent as MaterialCardView
+        parentCard.strokeColor = Color.parseColor("#E31414")
+        parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
+        this.errorOccured = true
+    }
+
+    private fun cancelError(textView: TextView, editText: EditText) {
+        textView.visibility = View.GONE
+        val parentCard : MaterialCardView =  editText.parent as MaterialCardView
+        parentCard.strokeWidth = 0
+        this.errorOccured = false
     }
 
     private fun registerStudent(lastName: String, firstName: String, email: String, mobileNumber: String, password: String){
