@@ -1,19 +1,23 @@
 package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.Firebase
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.ForgotPasswordBinding
@@ -39,6 +43,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
         this.etEmail = this.viewBinding.etEmail
         authProfile = Firebase.auth
 
+        this.viewBinding.clBackButton.imageButton.setOnClickListener{
+            finish()
+        }
+
         this.viewBinding.btProceed.setOnClickListener{
 
             val email = this.etEmail.text.toString()
@@ -54,7 +62,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             }
 
             if(!errorOccured){
-                
+                resetPassword(email)
             }
         }
 
@@ -66,6 +74,31 @@ class ForgotPasswordActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+    }
+
+    private fun resetPassword(email: String) {
+        authProfile.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                Toast.makeText(this@ForgotPasswordActivity, "Please check your inbox for password reset link.", Toast.LENGTH_LONG).show()
+
+                val intent = Intent(this@ForgotPasswordActivity, MainActivity::class.java)
+
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+            else{
+                try{
+                    throw task.exception!!
+                } catch (e: FirebaseException){ //on error
+                    triggerError(viewBinding.tvLoginEmailError, etEmail, resources.getString(R.string.error_login_email))
+
+                    Log.e(TAG, e.message.toString())
+                    Toast.makeText(this@ForgotPasswordActivity, "Error! " + e.message.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
     }
 
     private fun triggerError(textView: TextView, editText: EditText, message: String){
@@ -84,6 +117,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
         this.errorOccured = false
     }
 
+
+    companion object {
+        const val TAG : String = "ForgetPasswordActivity"
+    }
 
 
 }

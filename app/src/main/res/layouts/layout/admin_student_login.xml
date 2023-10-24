@@ -128,6 +128,19 @@
                 app:backgroundTint="@null" />
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/tv_forgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="3sp"
+            android:elevation="8dp"
+            android:fontFamily="@font/lato"
+            android:gravity="center_horizontal"
+            android:text="@string/forgot_password"
+            android:textColor="#3089BB"
+            android:textSize="16sp" />
+
 
     </LinearLayout>
 

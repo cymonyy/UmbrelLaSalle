@@ -203,7 +203,7 @@ class StudentCreateAccountActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val user = UserModel(lastName, firstName, email, mobileNumber, password)
+                val user = UserModel(lastName, firstName, email, mobileNumber)
                 user.id = auth.currentUser?.uid.toString()
 
                 userRef.document(user.id).set(user)

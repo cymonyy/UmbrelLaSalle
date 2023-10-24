@@ -1,6 +1,7 @@
 package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -49,6 +50,11 @@ class LoginActivity : AppCompatActivity() {
         this.viewBinding.clBackButton.imageButton.setOnClickListener(View.OnClickListener {
             finish()
         })
+
+        this.viewBinding.tvForgotPassword.setOnClickListener{
+            val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
 
         this.viewBinding.btProceed.setOnClickListener(View.OnClickListener {
             val email = etEmail.text.toString()
