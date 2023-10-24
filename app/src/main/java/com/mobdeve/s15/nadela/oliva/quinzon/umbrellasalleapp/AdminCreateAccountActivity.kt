@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.AdminCreateAccErrorBinding
-import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.StartScreenBinding
 
 class AdminCreateAccountActivity : AppCompatActivity(){
 
@@ -15,10 +14,12 @@ class AdminCreateAccountActivity : AppCompatActivity(){
         this.viewBinding = AdminCreateAccErrorBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        this.viewBinding.clBackButton.imageButton.setOnClickListener(View.OnClickListener {
+            finish()
+        })
 
         this.viewBinding.tvProceedLogin.setOnClickListener(View.OnClickListener {
             val newIntent = Intent(this@AdminCreateAccountActivity, LoginActivity::class.java)
-            newIntent.putExtra("user", "ADMIN")
             startActivity(newIntent)
             finish()
         })

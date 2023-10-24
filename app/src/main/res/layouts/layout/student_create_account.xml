@@ -18,6 +18,16 @@
 
         app:srcCompat="@drawable/student_create_account_background" />
 
+    <include
+        android:id="@+id/cl_back_button"
+        layout="@layout/component_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
@@ -258,9 +268,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:background="@drawable/general_irah_gradient_bg"
-                android:fontFamily="@font/lato_bold"
                 android:padding="0dp"
                 android:text="Create Account"
+
                 android:textSize="16sp"
                 app:backgroundTint="@null" />
         </com.google.android.material.card.MaterialCardView>
@@ -279,13 +289,15 @@
             <Button
                 android:id="@+id/bt_go_to_login"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="38dp"
                 android:background="#757272"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/lato_italic"
-                android:text="Go to Login Instead"
-                android:textColor="#595555"
-                android:textSize="12sp"
+                android:backgroundTint="#FFFFFF"
+                android:fontFamily="@font/lato"
+                android:letterSpacing="0.01"
+                android:text="Login Instead"
+                android:textColor="#9F9F9F"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 app:backgroundTint="@null" />
         </com.google.android.material.card.MaterialCardView>
 

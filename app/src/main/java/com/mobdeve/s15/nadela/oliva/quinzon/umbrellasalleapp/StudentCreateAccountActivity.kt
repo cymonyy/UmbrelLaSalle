@@ -1,6 +1,7 @@
 package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Message
@@ -55,6 +56,16 @@ class StudentCreateAccountActivity : AppCompatActivity() {
         etConfirmPass = this.viewBinding.etConfPassword
 
 
+        this.viewBinding.clBackButton.imageButton.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+
+        this.viewBinding.btGoToLogin.setOnClickListener{
+            val newIntent = Intent(this@StudentCreateAccountActivity, LoginActivity::class.java)
+            startActivity(newIntent)
+            finish()
+        }
+
         this.viewBinding.btProceed.setOnClickListener(View.OnClickListener {
             val firstName = etFirstName.text.toString()
             val lastName = etLastName.text.toString()
@@ -66,22 +77,22 @@ class StudentCreateAccountActivity : AppCompatActivity() {
 
             //First Name Errors
             if(TextUtils.isEmpty(firstName)){
-                triggerError(viewBinding.tvFirstNameError, etFirstName, resources.getStringArray(R.array.register_name)[0])
+                triggerError(viewBinding.tvFirstNameError, etFirstName, resources.getStringArray(R.array.error_register_name)[0])
             }
 
             //Last Name Errors
             if(TextUtils.isEmpty(lastName)){
-                triggerError(viewBinding.tvLastNameError, etLastName, resources.getStringArray(R.array.register_name)[1])
+                triggerError(viewBinding.tvLastNameError, etLastName, resources.getStringArray(R.array.error_register_name)[1])
             }
 
             //Email Errors
             pattern = Pattern.compile("[a-z](?:[a-z]+(_|\\.))+[a-z]+@dlsu.edu.ph") //DLSU email
             matcher = pattern.matcher(email)
             if(TextUtils.isEmpty(email)){
-                triggerError(viewBinding.tvEmailError, etEmail, resources.getStringArray(R.array.register_email)[0])
+                triggerError(viewBinding.tvEmailError, etEmail, resources.getStringArray(R.array.error_general_email_fields)[0])
             }
             else if(!matcher.matches()){
-                triggerError(viewBinding.tvEmailError, etEmail, resources.getStringArray(R.array.register_email)[1])
+                triggerError(viewBinding.tvEmailError, etEmail, resources.getStringArray(R.array.error_general_email_fields)[1])
             }
 
             //Mobile Number Errors
@@ -89,26 +100,26 @@ class StudentCreateAccountActivity : AppCompatActivity() {
             pattern = Pattern.compile("09[0-9]{9}") //Philippines number
             matcher = pattern.matcher(mobileNumber)
             if(TextUtils.isEmpty(mobileNumber)){
-                triggerError(viewBinding.tvPhoneError, etMobile, resources.getStringArray(R.array.register_mobile)[0])
+                triggerError(viewBinding.tvPhoneError, etMobile, resources.getStringArray(R.array.error_register_mobile)[0])
             }
             else if(!matcher.matches()){
-                triggerError(viewBinding.tvPhoneError, etMobile, resources.getStringArray(R.array.register_mobile)[1])
+                triggerError(viewBinding.tvPhoneError, etMobile, resources.getStringArray(R.array.error_register_mobile)[1])
             }
 
             //Password Errors
             if(TextUtils.isEmpty(password)){
-                triggerError(viewBinding.tvPassError, etPassword, resources.getStringArray(R.array.register_password)[0])
+                triggerError(viewBinding.tvPassError, etPassword, resources.getStringArray(R.array.error_general_pass_fields)[0])
             }
             else if(password.length <= 6){
-                triggerError(viewBinding.tvPassError, etPassword, resources.getStringArray(R.array.register_password)[1])
+                triggerError(viewBinding.tvPassError, etPassword, resources.getStringArray(R.array.error_register_password)[0])
             }
 
             //Confirm Password Errors
             if(TextUtils.isEmpty(confirmPassword)){
-                triggerError(viewBinding.tvConfirmError, etConfirmPass, resources.getStringArray(R.array.register_confirm_password)[0])
+                triggerError(viewBinding.tvConfirmError, etConfirmPass, resources.getStringArray(R.array.error_register_confirm_password)[0])
             }
             else if(!TextUtils.equals(password, confirmPassword)){
-                triggerError(viewBinding.tvConfirmError, etConfirmPass, resources.getStringArray(R.array.register_confirm_password)[1])
+                triggerError(viewBinding.tvConfirmError, etConfirmPass, resources.getStringArray(R.array.error_register_confirm_password)[1])
             }
 
             if(!errorOccured){
@@ -216,20 +227,10 @@ class StudentCreateAccountActivity : AppCompatActivity() {
                try{
                    throw task.exception!!
                }catch (e: FirebaseAuthInvalidCredentialsException){
-                   viewBinding.tvEmailError.visibility = View.VISIBLE
-                   viewBinding.tvEmailError.text = resources.getStringArray(R.array.register_email)[2]
-                   val parentCard : MaterialCardView =  etEmail.parent as MaterialCardView
-                   parentCard.strokeColor = Color.parseColor("#E31414")
-                   parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                   errorOccured = true
+                   triggerError(viewBinding.tvEmailError, etEmail, resources.getStringArray(R.array.error_register_email)[0])
 
                } catch (e : FirebaseAuthUserCollisionException){
-                   viewBinding.tvEmailError.visibility = View.VISIBLE
-                   viewBinding.tvEmailError.text = resources.getStringArray(R.array.register_email)[3]
-                   val parentCard : MaterialCardView =  etEmail.parent as MaterialCardView
-                   parentCard.strokeColor = Color.parseColor("#E31414")
-                   parentCard.strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.5f, resources.displayMetrics ).toInt()
-                   errorOccured = true
+                   triggerError(viewBinding.tvEmailError, etEmail, resources.getStringArray(R.array.error_register_email)[1])
                } catch (e : Exception){
                    Log.e(Companion.TAG, e.message.toString())
                    Toast.makeText(this@StudentCreateAccountActivity, "Error! " + e.message.toString(), Toast.LENGTH_LONG).show()

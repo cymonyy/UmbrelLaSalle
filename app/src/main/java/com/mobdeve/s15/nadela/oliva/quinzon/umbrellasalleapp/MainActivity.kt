@@ -15,16 +15,18 @@ class MainActivity : AppCompatActivity() {
         this.viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        this.viewBinding.cvStudent.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@MainActivity, StartScreenActivity::class.java)
-            intent.putExtra("user", "STUDENT")
-            startActivity(intent)
+        this.viewBinding.btProceed.setOnClickListener(View.OnClickListener {
+            val newIntent = Intent(this@MainActivity, ChooseUserActivity::class.java)
+            startActivity(newIntent)
         })
 
-        this.viewBinding.cvAdmin.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@MainActivity, StartScreenActivity::class.java)
-            intent.putExtra("user", "ADMIN")
-            startActivity(intent)
+        this.viewBinding.btLogin.setOnClickListener(View.OnClickListener {
+            val newIntent = Intent(this@MainActivity, LoginActivity::class.java)
+            startActivity(newIntent)
         })
+
+
+
+
     }
 }
