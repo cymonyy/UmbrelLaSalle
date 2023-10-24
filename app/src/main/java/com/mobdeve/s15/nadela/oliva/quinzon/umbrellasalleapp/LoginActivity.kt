@@ -14,12 +14,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.auth
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.AdminStudentLoginBinding
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -46,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail = this.viewBinding.etLoginEmail
         etPassword = this.viewBinding.etLoginPassword
 
-        authProfile = FirebaseAuth.getInstance()
+        authProfile = Firebase.auth
 
         this.viewBinding.clBackButton.imageButton.setOnClickListener(View.OnClickListener {
             finish()
@@ -64,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 triggerError(viewBinding.tvLoginEmailError, etEmail, resources.getStringArray(R.array.error_general_email_fields)[0])
             }
             else if(!matcher.matches()){
-                triggerError(viewBinding.tvLoginPassError, etEmail, resources.getStringArray(R.array.error_general_email_fields)[1])
+                triggerError(viewBinding.tvLoginEmailError, etEmail, resources.getStringArray(R.array.error_general_email_fields)[1])
             }
 
             //Password Errors
@@ -99,29 +97,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginUser(email: String, password: String) {
-        val customToken : String? = null
-
-        customToken?.let {
-            authProfile.signInWithCustomToken(it)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithCustomToken:success")
-                        
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCustomToken:failure", task.exception)
-                        Toast.makeText(
-                            baseContext,
-                            "Authentication failed.",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                        updateUI(null)
-                    }
-                }
-        }
-
-        /*authProfile.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+        authProfile.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if(task.isSuccessful){
                 Toast.makeText(this@LoginActivity, "User Login Successful!", Toast.LENGTH_LONG).show()
             }
@@ -129,25 +105,17 @@ class LoginActivity : AppCompatActivity() {
                 try{
                     throw task.exception!!
                 }
-                catch (e: FirebaseAuthInvalidUserException){ //if does not exists
-                    triggerError(viewBinding.tvLoginEmailError, etEmail, resources.getStringArray(R.array.error_login_email)[0])
-                }
-                catch (e: FirebaseAuthInvalidCredentialsException){ //if email and password mismatch
-                    triggerError(viewBinding.tvLoginEmailError, etEmail,"")
-                    etEmail.error = "This does not match!"
+                catch (e: FirebaseException){ //on error
+                    triggerError(viewBinding.tvLoginEmailError, etEmail, resources.getString(R.string.error_login_email))
+                    triggerError(viewBinding.tvLoginPassError, etPassword,resources.getString(R.string.error_login_pass))
 
-                    triggerError(viewBinding.tvLoginPassError, etPassword,"")
-                    etEmail.error = "This does not match!"
-                }
-
-
-                catch (e: Exception){
                     Log.e(TAG, e.message.toString())
                     Toast.makeText(this@LoginActivity, "Error! " + e.message.toString(), Toast.LENGTH_LONG).show()
                 }
+
             }
 
-        }*/
+        }
 
     }
 

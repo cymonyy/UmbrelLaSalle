@@ -34,8 +34,6 @@
         <item>Both passwords do not match. Kindly re-enter.</item>
     </string-array>
 
-    <string-array name="error_login_email">
-        <item>User does not exists or is no longer valid. Please register again.</item>
-        <item>Invalid credentials. Kindly, check and re-enter</item>
-    </string-array>
+    <string name="error_login_email">Invalid credentials. Kindly, check and re-enter.</string>
+    <string name="error_login_pass">Your password does not match with the email. Kindly, check and re-enter.</string>
 </resources>
