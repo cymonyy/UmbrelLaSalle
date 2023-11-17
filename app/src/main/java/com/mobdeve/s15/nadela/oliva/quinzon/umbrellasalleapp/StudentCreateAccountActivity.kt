@@ -213,6 +213,10 @@ class StudentCreateAccountActivity : AppCompatActivity() {
                             "user created successfully",
                             Toast.LENGTH_LONG
                         ).show()
+
+                        val newIntent = Intent(this@StudentCreateAccountActivity, LoginActivity::class.java)
+                        startActivity(newIntent)
+                        finish()
                     }
                     .addOnFailureListener { e ->
                         Log.e(TAG, e.message.toString())
