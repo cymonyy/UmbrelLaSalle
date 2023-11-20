@@ -31,4 +31,16 @@
         <item name="fontFamily">@font/lato_italic</item>
         <item name="android:fontFamily">@font/lato_italic</item>
     </style>
+
+    <style name="StudentTransactionsCardView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/StudentTransactionsCardView_card_custom_corners</item>
+    </style>
+
+    <style name="StudentTransactionsCardView_card_custom_corners">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">8dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">8dp</item>
+    </style>
 </resources>
