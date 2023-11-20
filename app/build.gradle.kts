@@ -64,6 +64,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.appcompat:appcompat-resources:$appcompatVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
@@ -80,4 +81,5 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.9.1")
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation("com.google.firebase:firebase-analytics:21.5.0")
+
 }

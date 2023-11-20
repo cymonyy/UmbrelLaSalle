@@ -106,6 +106,10 @@ class LoginActivity : AppCompatActivity() {
         authProfile.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if(task.isSuccessful){
                 Toast.makeText(this@LoginActivity, "User Login Successful!", Toast.LENGTH_LONG).show()
+                val intent = Intent(this@LoginActivity, StudentViewTransactions::class.java)
+                intent.putExtra("userID", authProfile.currentUser?.uid.toString())
+                startActivity(intent)
+                finish()
             }
             else {
                 try{
