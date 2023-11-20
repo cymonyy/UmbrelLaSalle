@@ -8,7 +8,15 @@ class StationModel {
     var existingTransactions: List<TransactionModel> = mutableListOf()
 
     constructor()
-
-
-
+    constructor(
+        id: String,
+        admins: List<UserModel>,
+        stock: List<StockItemModel>,
+        existingTransactions: List<TransactionModel>
+    ) {
+        this.id = id
+        this.admins = admins
+        this.stock = stock
+        this.existingTransactions = existingTransactions
+    }
 }

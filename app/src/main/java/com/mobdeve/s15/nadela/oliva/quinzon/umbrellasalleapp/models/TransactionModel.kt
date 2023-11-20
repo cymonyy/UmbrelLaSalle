@@ -6,11 +6,37 @@ class TransactionModel {
     var borrower: String = ""
     var station: String = ""
     var status: String = ""
-    var transaction_date: String = ""
-    var expected_date: String = ""
-    var actual_return_date: String = ""
-    var requested_items: List<ItemModel> = mutableListOf()
-    var request_note: String = ""
-    var return_note: String = ""
+    var transactionDate: String = ""
+    var expectedDate: String = ""
+    var actualReturnDate: String = ""
+    var requestedItems: List<ItemModel> = mutableListOf()
+    var requestNote: String = ""
+    var returnNote: String = ""
+
+    constructor()
+    constructor(
+        id: String,
+        borrower: String,
+        station: String,
+        status: String,
+        transactionDate: String,
+        expectedDate: String,
+        actualReturnDate: String,
+        requestedItems: List<ItemModel>,
+        requestNote: String,
+        returnNote: String
+    ) {
+        this.id = id
+        this.borrower = borrower
+        this.station = station
+        this.status = status
+        this.transactionDate = transactionDate
+        this.expectedDate = expectedDate
+        this.actualReturnDate = actualReturnDate
+        this.requestedItems = requestedItems
+        this.requestNote = requestNote
+        this.returnNote = returnNote
+    }
+
 
 }
