@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 class StockItemHelper {
 
     companion object {
-        suspend fun getStudentTransactions(userID: String): MutableList<DocumentSnapshot> = withContext(
+        suspend fun getStockItems(): MutableList<DocumentSnapshot> = withContext(
             Dispatchers.IO) {
             try {
 
