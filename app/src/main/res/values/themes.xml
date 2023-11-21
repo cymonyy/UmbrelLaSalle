@@ -43,4 +43,9 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">8dp</item>
     </style>
+
+    <style name="Student_AddTransaction_Submit" parent="CardView">
+        <item name="android:foreground">@drawable/student_submit_gradient_background</item>
+    </style>
+
 </resources>

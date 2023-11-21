@@ -41,4 +41,8 @@
     <string name="list_borrowed_transactions_status">Status: <b>%s</b></string>
     <string name="list_borrowed_transactions_station">Station: <b>%s</b></string>
     <string name="list_borrowed_transactions_days_left"><b>%s</b> Days Left to Return</string>
+
+    <string-array name="stations_list">
+        <item>Gokongwei College of Engineering</item>
+    </string-array>
 </resources>
