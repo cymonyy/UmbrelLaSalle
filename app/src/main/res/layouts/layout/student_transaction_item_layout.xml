@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_transaction_card"
         style="@style/StudentTransactionsCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
-        android:layout_margin="10dp"
 
 
         android:clipChildren="false"
@@ -42,7 +41,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clipToPadding="true"
@@ -53,18 +52,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_station"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clipToPadding="true"
@@ -76,7 +77,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="right|center_vertical"
                         android:paddingRight="10dp"
-                        android:text="Expected Date of Return:" />
+                        android:text="Expected Date of Return:"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_expected_return_date"
@@ -85,13 +87,14 @@
                         android:fontFamily="sans-serif-medium"
                         android:gravity="right|center_vertical"
                         android:paddingRight="10dp"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
-                android:layout_height="0.1dip"
+                android:layout_height="1dip"
                 android:background="#000000" />
 
             <LinearLayout
@@ -103,21 +106,24 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="Requested Items:" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_requested_items"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center|center_horizontal"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal" />
             </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
-                android:layout_height="0.1dip"
+                android:layout_height="1dip"
                 android:background="#000000" />
 
             <TextView
@@ -125,9 +131,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:fontFamily="sans-serif-black"
                 android:gravity="center|right"
                 android:paddingRight="10dp"
-                android:text="Requested Items:" />
+                android:text="Requested Items:"
+                android:textColor="#A34B4B" />
 
 
         </LinearLayout>

@@ -9,7 +9,7 @@ class TransactionModel {
     var transactionDate: String = ""
     var expectedReturnDate: String = ""
     var actualReturnDate: String = ""
-    var requestedItems: MutableList<String> = mutableListOf()
+    var requestedItems: MutableMap<String, String> = mutableMapOf()
     var requestNote: String = ""
     var returnNote: String = ""
 
@@ -22,7 +22,7 @@ class TransactionModel {
         transactionDate: String,
         expectedReturnDate: String,
         actualReturnDate: String,
-        requestedItems: MutableList<String>,
+        requestedItems: MutableMap<String, String>,
         requestNote: String,
         returnNote: String
     ) {

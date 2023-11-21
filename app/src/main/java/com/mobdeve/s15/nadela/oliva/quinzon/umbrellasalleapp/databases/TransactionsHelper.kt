@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 class TransactionsHelper {
 
     companion object {
-        suspend fun getStudentTransactions(userID: String): List<DocumentSnapshot> = withContext(Dispatchers.IO) {
+        suspend fun getStudentTransactions(userID: String): MutableList<DocumentSnapshot> = withContext(Dispatchers.IO) {
             try {
                 val db = FirebaseFirestore.getInstance()
                 val querySnapshot = db.collection("Transactions").whereEqualTo("borrower", userID).get().await()

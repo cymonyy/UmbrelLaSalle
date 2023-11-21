@@ -37,4 +37,8 @@
     <string name="error_login_email">Invalid credentials or password mismatch. Kindly, check and re-enter.</string>
     <string name="error_login_pass">Your password does not match with the email. Kindly, check and re-enter.</string>
     <string name="forgot_password"><u>Forgot Password</u></string>
+
+    <string name="list_borrowed_transactions_status">Status: <b>%s</b></string>
+    <string name="list_borrowed_transactions_station">Station: <b>%s</b></string>
+    <string name="list_borrowed_transactions_days_left"><b>%s</b> Days Left to Return</string>
 </resources>
