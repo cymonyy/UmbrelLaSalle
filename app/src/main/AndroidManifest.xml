@@ -32,6 +32,9 @@
             android:exported="false" />
         <activity
             android:name=".ItemsInventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminStudentsTableActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
