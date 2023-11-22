@@ -38,5 +38,27 @@ class TransactionModel {
         this.returnNote = returnNote
     }
 
+    constructor(
+        borrower: String,
+        station: String,
+        status: String,
+        transactionDate: String,
+        expectedReturnDate: String,
+        actualReturnDate: String,
+        requestedItems: MutableMap<String, String>,
+        requestNote: String,
+        returnNote: String
+    ) {
+        this.borrower = borrower
+        this.station = station
+        this.status = status
+        this.transactionDate = transactionDate
+        this.expectedReturnDate = expectedReturnDate
+        this.actualReturnDate = actualReturnDate
+        this.requestedItems = requestedItems
+        this.requestNote = requestNote
+        this.returnNote = returnNote
+    }
+
 
 }

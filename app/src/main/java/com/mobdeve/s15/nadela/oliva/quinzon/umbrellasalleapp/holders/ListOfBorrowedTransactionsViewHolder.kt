@@ -14,7 +14,9 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-class ListOfBorrowedTransactionsViewHolder(itemView: StudentTransactionItemLayoutBinding, private val context: Context): ViewHolder(itemView.root) {
+class ListOfBorrowedTransactionsViewHolder(itemView: StudentTransactionItemLayoutBinding, private var context: Context): ViewHolder(itemView.root) {
+
+
 
     private var status = itemView.tvStatus
     private var station = itemView.tvStation

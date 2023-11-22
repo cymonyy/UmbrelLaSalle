@@ -39,4 +39,10 @@ class ListOfBorrowedTransactionsAdapter(private var data: MutableList<Transactio
         Log.d("DataSetAfter", data.last().toString())
         notifyDataSetChanged()
     }
+    fun addData(transaction: TransactionModel) {
+        this.data.add(transaction)
+        notifyItemInserted(this.data.size - 1)
+    }
+
+
 }

@@ -22,6 +22,36 @@ class TransactionsHelper {
                 return@withContext mutableListOf()
             }
         }
+
+        @Throws(Exception::class)
+        suspend fun addStudentTransaction(data: TransactionModel): TransactionModel {
+            val db = FirebaseFirestore.getInstance()
+
+            val result = db.runTransaction { transaction ->
+                    //update document(requestItems).requested = true
+                    for (item in data.requestedItems.values){
+                        transaction.update(db.collection("Items").document(item), "requested", true)
+                    }
+
+                    //create a new document under transactions
+                    val newEntry = db.collection("Transactions").document()
+
+                    //update transaction.id to added document.id
+                    data.id = newEntry.id
+
+                    //add the data to the firestore
+                    transaction.set(newEntry, data)
+
+                    //return transaction
+                    data
+                }
+                .addOnFailureListener {
+                    throw Exception("Service Error Detected!")
+                }
+                .await()
+
+            return result
+        }
     }
 
 

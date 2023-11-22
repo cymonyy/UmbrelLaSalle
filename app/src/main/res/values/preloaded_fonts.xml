@@ -6,6 +6,7 @@
         <item>@font/lato_italic</item>
         <item>@font/lato_light</item>
         <item>@font/lato_light_italic</item>
+        <item>@font/montserrat_bold</item>
         <item>@font/montserrat_semibold</item>
     </array>
 </resources>

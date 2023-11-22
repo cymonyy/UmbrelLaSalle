@@ -2,6 +2,8 @@ package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +13,7 @@ import com.google.firebase.firestore.toObject
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.adapters.ListOfBorrowedTransactionsAdapter
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databases.TransactionsHelper
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.StudentListOfBorrowedTransactionsBinding
+import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.fragments.AddTransactionBottomSheetDialogFragment
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.TransactionModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +27,7 @@ class StudentViewTransactions: AppCompatActivity() {
     private var transactions: MutableList<TransactionModel> = mutableListOf()
     private lateinit var listAdapter: ListOfBorrowedTransactionsAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +42,32 @@ class StudentViewTransactions: AppCompatActivity() {
         recyclerView.adapter = listAdapter
 
 
+        viewBinding.ibAddButton.setOnClickListener {
+            showBottomSheetDialog()
+
+        }
+
+        progressBar = viewBinding.progressBar
+
         // Load data from Firestore
         loadStudentTransactions()
     }
 
+    private fun showBottomSheetDialog() {
+        // Use BottomSheetFragment with view binding
+        val bottomSheetFragment = AddTransactionBottomSheetDialogFragment(intent.getStringExtra("userID").toString())
+        bottomSheetFragment.setBottomSheetListener(object : AddTransactionBottomSheetDialogFragment.BottomSheetListener {
+            override fun onDataSent(transaction: TransactionModel) {
+                listAdapter.addData(transaction)
+                recyclerView.smoothScrollToPosition(listAdapter.itemCount - 1)
+            }
+        })
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+    }
 
 
     private fun loadStudentTransactions(){
+        progressBar.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.Main) {
             try {
                 val user = intent.getStringExtra("userID").toString()
@@ -63,6 +86,7 @@ class StudentViewTransactions: AppCompatActivity() {
                 Log.e("EXCEPTION", e.message.toString())
             }
         }
+        progressBar.visibility = View.GONE
     }
 
     private fun processData(documents: List<DocumentSnapshot>){

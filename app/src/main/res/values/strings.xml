@@ -44,5 +44,6 @@
 
     <string-array name="stations_list">
         <item>Gokongwei College of Engineering</item>
+        <item>Br. Andrew Gonzales Hall</item>
     </string-array>
 </resources>
