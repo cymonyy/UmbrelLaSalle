@@ -42,7 +42,7 @@ class TransactionViewHolder (private val binding: TransactionItemBinding):
         val days = period.days
 
         return if(days <= 0) {
-            "Please return the equipment/s today."
+            "Item/s must be returned now"
         } else {
             "$days ${if (days == 1) "day" else "days"} left to return"
         }
