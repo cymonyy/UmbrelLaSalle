@@ -30,8 +30,17 @@
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".AdminStudentsTableActivity"-->
+<!--            android:exported="false" />-->
         <activity
-            android:name=".MainActivity"
+            android:name=".ItemsInventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminStudentsTransactionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminStudentsTableActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
