@@ -21,12 +21,15 @@ class TransactionViewHolder (private val binding: TransactionItemBinding):
 
     fun bind(transaction: TransactionModel){
         binding.tvTransactionStatusValue.text = transaction.status
-        binding.tvStudentNumberValue.text = transaction.borrower
         binding.tvTransactionNumberValue.text = transaction.id
+        binding.tvStudentNumberValue.text = transaction.borrower
 
         binding.tvEDRValue.text = formatDateInWords(transaction.expectedReturnDate)
 //        binding.tvUmbrellaValue = transaction.requestedItems
         binding.tvDaysLeftValue.text = daysUntil(transaction.expectedReturnDate)
+
+        binding.cvTransaction.isClickable = transaction.status=="Approved"
+
     }
 
     private fun daysUntil(expectedReturnDate: String):String{
@@ -39,7 +42,7 @@ class TransactionViewHolder (private val binding: TransactionItemBinding):
         val days = period.days
 
         return if(days <= 0) {
-            "0 Days left to return"
+            "Please return the equipment/s today."
         } else {
             "$days ${if (days == 1) "day" else "days"} left to return"
         }

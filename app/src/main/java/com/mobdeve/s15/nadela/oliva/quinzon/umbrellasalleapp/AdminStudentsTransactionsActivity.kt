@@ -74,7 +74,11 @@ class AdminStudentsTransactionsActivity:AppCompatActivity() {
     private fun processData(documents: List<DocumentSnapshot>){
         // Handle the data on the main thread
         for(document in  documents){
-            document.toObject<TransactionModel>()?.let { data.add(it) }
+            val transaction = document.toObject<TransactionModel>()
+            if (transaction != null) {
+                transaction.id=document.id
+                data.add(transaction)
+            }
         }
     }
 
