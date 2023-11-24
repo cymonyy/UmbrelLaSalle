@@ -1,14 +1,15 @@
 package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.toObject
@@ -18,6 +19,7 @@ import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.UserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class AdminStudentsTableActivity : AppCompatActivity(){
 
@@ -31,7 +33,26 @@ class AdminStudentsTableActivity : AppCompatActivity(){
         binding = AdminStudentsTableBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val tvStudentsLabel: TextView = findViewById(R.id.tvStudentsLabel)
+        underlineText(tvStudentsLabel)
+
         fetchUsersDataFromFirebase()
+    }
+
+    fun openItemsInventory(view: View?) {
+        val intent = Intent(this, ItemsInventoryActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun openTransactionsPage(view: View?) {
+        val intent = Intent(this, AdminStudentsTransactionsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun underlineText(textView: TextView){
+        val content = SpannableString(textView.text)
+        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+        textView.text = content
     }
 
     private fun fetchUsersDataFromFirebase() {

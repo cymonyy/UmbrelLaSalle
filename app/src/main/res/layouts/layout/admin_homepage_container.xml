@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="409dp"
         android:layout_height="729dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +42,9 @@
                 android:fontFamily="@font/lato"
                 android:text="Students"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:clickable="true"
+                android:onClick="openStudentsPage"/>
 
             <TextView
                 android:id="@+id/tvItemsInventoryLabel"
@@ -50,6 +53,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/lato"
                 android:text="Items Inventory"
+                android:textColor="#892AB6"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textSize="16sp" />
 
@@ -61,7 +66,9 @@
                 android:fontFamily="@font/lato"
                 android:text="Transactions"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:clickable="true"
+                android:onClick="openTransactionsPage"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

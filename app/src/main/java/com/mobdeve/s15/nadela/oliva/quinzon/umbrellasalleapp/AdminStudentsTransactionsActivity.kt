@@ -1,7 +1,9 @@
 package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +40,16 @@ class AdminStudentsTransactionsActivity:AppCompatActivity() {
 
         loadTransactions()
 
+    }
+
+    fun openItemsInventory(view: View?) {
+        val intent = Intent(this, ItemsInventoryActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun openStudentsPage(view: View?) {
+        val intent = Intent(this, AdminStudentsTableActivity::class.java)
+        startActivity(intent)
     }
 
     private fun loadTransactions(){
