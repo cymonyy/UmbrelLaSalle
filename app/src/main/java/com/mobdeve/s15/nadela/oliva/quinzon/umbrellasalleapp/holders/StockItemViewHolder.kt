@@ -7,7 +7,7 @@ import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.StockItemMod
 class StockItemViewHolder(private val binding: InventoryItemBinding): RecyclerView.ViewHolder(binding.root){
 
     fun bind(stockItem: StockItemModel){
-        binding.tvItemName.text = stockItem.name
+        binding.tvItemName.text = stockItem.itemCategory
         binding.tvStockValue.text = stockItem.available.toString()
     }
 

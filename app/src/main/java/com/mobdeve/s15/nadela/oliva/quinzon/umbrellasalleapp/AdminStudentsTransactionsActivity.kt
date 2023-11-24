@@ -2,53 +2,53 @@ package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent.DispatcherState
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.toObject
-import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.adapters.StockItemAdapter
-import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databases.StockItemHelper
-import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.AdminHomepageContainerBinding
-import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.StockItemModel
+import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.adapters.TransactionsAdapter
+import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databases.TransactionHelper
+import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.AdminTransactionsListBinding
+import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.TransactionModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ItemsInventoryActivity: AppCompatActivity() {
+class AdminStudentsTransactionsActivity:AppCompatActivity() {
 
-    private lateinit var binding: AdminHomepageContainerBinding
+    private lateinit var binding: AdminTransactionsListBinding
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: StockItemAdapter
-    private lateinit var data: MutableList<StockItemModel>
+    private lateinit var adapter: TransactionsAdapter
+    private lateinit var data: MutableList<TransactionModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        this.binding = AdminHomepageContainerBinding.inflate(layoutInflater)
+        this.binding = AdminTransactionsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        recyclerView = this.binding.rvItemsInventory
+        recyclerView = this.binding.rvTransactions
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = StockItemAdapter(mutableListOf())
+        adapter = TransactionsAdapter(mutableListOf())
         recyclerView.adapter = adapter
 
-        loadStockItems()
+        loadTransactions()
 
     }
-    private fun loadStockItems(){
+
+    private fun loadTransactions(){
         lifecycleScope.launch(Dispatchers.Main) {
             try{
                 data = mutableListOf()
                 val documents = withContext(Dispatchers.IO){
-                    StockItemHelper.getStockItems()
+                    TransactionHelper.getTransaction()
                 }
 
-                if (documents.isEmpty()) throw Exception("No items found")
+                if (documents.isEmpty()) throw Exception("No transactions found")
 
                 processData(documents)
                 adapter.updateData(data)
@@ -62,7 +62,8 @@ class ItemsInventoryActivity: AppCompatActivity() {
     private fun processData(documents: List<DocumentSnapshot>){
         // Handle the data on the main thread
         for(document in  documents){
-            document.toObject<StockItemModel>()?.let { data.add(it) }
+            document.toObject<TransactionModel>()?.let { data.add(it) }
         }
     }
+
 }

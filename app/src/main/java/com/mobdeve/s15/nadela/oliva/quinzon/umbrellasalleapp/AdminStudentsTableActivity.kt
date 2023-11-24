@@ -45,6 +45,8 @@ class AdminStudentsTableActivity : AppCompatActivity(){
                 if (documents.isNotEmpty()) {
                     processData(documents)
                     createTable()
+
+                    Log.d("DATA_ACQUIRED", "Data acquired from Firestore: $data")
                 } else {
                     Log.e("EXCEPTION", "No user data found")
                 }

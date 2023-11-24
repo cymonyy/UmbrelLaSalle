@@ -7,9 +7,9 @@ class TransactionModel {
     var station: String = ""
     var status: String = ""
     var transactionDate: String = ""
-    var expectedDate: String = ""
+    var expectedReturnDate: String = ""
     var actualReturnDate: String = ""
-    var requestedItems: List<ItemModel> = mutableListOf()
+    var requestedItems: MutableMap<String, String> = mutableMapOf()
     var requestNote: String = ""
     var returnNote: String = ""
 
@@ -20,9 +20,9 @@ class TransactionModel {
         station: String,
         status: String,
         transactionDate: String,
-        expectedDate: String,
+        expectedReturnDate: String,
         actualReturnDate: String,
-        requestedItems: List<ItemModel>,
+        requestedItems: MutableMap<String, String>,
         requestNote: String,
         returnNote: String
     ) {
@@ -31,7 +31,29 @@ class TransactionModel {
         this.station = station
         this.status = status
         this.transactionDate = transactionDate
-        this.expectedDate = expectedDate
+        this.expectedReturnDate = expectedReturnDate
+        this.actualReturnDate = actualReturnDate
+        this.requestedItems = requestedItems
+        this.requestNote = requestNote
+        this.returnNote = returnNote
+    }
+
+    constructor(
+        borrower: String,
+        station: String,
+        status: String,
+        transactionDate: String,
+        expectedReturnDate: String,
+        actualReturnDate: String,
+        requestedItems: MutableMap<String, String>,
+        requestNote: String,
+        returnNote: String
+    ) {
+        this.borrower = borrower
+        this.station = station
+        this.status = status
+        this.transactionDate = transactionDate
+        this.expectedReturnDate = expectedReturnDate
         this.actualReturnDate = actualReturnDate
         this.requestedItems = requestedItems
         this.requestNote = requestNote

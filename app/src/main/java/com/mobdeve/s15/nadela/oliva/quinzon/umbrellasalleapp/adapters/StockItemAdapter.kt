@@ -12,7 +12,8 @@ import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.Invento
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.holders.StockItemViewHolder
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.StockItemModel
 
-class StockItemAdapter(private var stockItemList: MutableList<StockItemModel>):Adapter<StockItemViewHolder>(){
+class StockItemAdapter(private var stockItemList: MutableList<StockItemModel>):
+    Adapter<StockItemViewHolder>(){
 
     private val itemColors = intArrayOf(
         android.graphics.Color.parseColor("#20C2AF"),
