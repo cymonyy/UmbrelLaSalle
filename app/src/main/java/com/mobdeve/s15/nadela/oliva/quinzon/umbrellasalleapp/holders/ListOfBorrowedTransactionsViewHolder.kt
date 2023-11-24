@@ -21,7 +21,7 @@ class ListOfBorrowedTransactionsViewHolder(itemView: StudentTransactionItemLayou
     private var status = itemView.tvStatus
     private var station = itemView.tvStation
     private var expectedReturnDate = itemView.tvExpectedReturnDate
-    private var requestItems = itemView.rvRequestedItems
+    private var requestItems = itemView.rvRequestedItemsView
     private var daysLeft = itemView.tvDaysLeft
     private var card = itemView.cvTransactionCard
     private lateinit var itemsAdapter: TransactionProductItemCardsAdapter
@@ -36,13 +36,13 @@ class ListOfBorrowedTransactionsViewHolder(itemView: StudentTransactionItemLayou
         this.expectedReturnDate.text = expected.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
         requestItems.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        itemsAdapter = TransactionProductItemCardsAdapter(transaction.requestedItems.keys.toMutableList())
+        itemsAdapter = TransactionProductItemCardsAdapter(createRequestedItemsMapping(transaction.requestedItems.keys))
         requestItems.adapter = itemsAdapter
 
         // Calculate the number of days left
         val left = ChronoUnit.DAYS.between(LocalDate.now(), expected)
         daysLeft.text = when(transaction.status == "Approved"){
-            true -> HtmlCompat.fromHtml(context.getString(R.string.list_borrowed_transactions_days_left, left.toInt().toString()), HtmlCompat.FROM_HTML_MODE_LEGACY)
+            true -> if(left > 0) HtmlCompat.fromHtml(context.getString(R.string.list_borrowed_transactions_days_left, left.toInt().toString()), HtmlCompat.FROM_HTML_MODE_LEGACY) else "RETURN NOW"
             false -> ""
         }
 
@@ -52,7 +52,16 @@ class ListOfBorrowedTransactionsViewHolder(itemView: StudentTransactionItemLayou
             "Denied" -> card.setCardBackgroundColor(context.getColor(R.color.transaction_denied))
             "Returned" -> card.setCardBackgroundColor(context.getColor(R.color.transaction_returned))
         }
+    }
 
+    private fun createRequestedItemsMapping(request: MutableSet<String>): MutableList<MutableMap.MutableEntry<String, Boolean>>{
+        val items: MutableList<MutableMap.MutableEntry<String, Boolean>> = mutableListOf()
+        for (x in request){
+            val map = mutableMapOf(x to true)
+            items.add(map.entries.first())
+        }
+
+        return items
     }
 
 }

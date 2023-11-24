@@ -53,9 +53,13 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     val appcompatVersion = "1.6.1"
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation ("androidx.core:core-ktx:1.12.0")
+    implementation ("androidx.lifecycle:lifecycle-common:2.6.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -81,5 +85,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.9.1")
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation("com.google.firebase:firebase-analytics:21.5.0")
+
+    implementation("com.google.zxing:core:3.4.1")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
 }

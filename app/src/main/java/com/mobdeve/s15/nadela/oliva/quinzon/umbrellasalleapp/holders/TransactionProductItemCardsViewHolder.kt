@@ -19,7 +19,8 @@ class TransactionProductItemCardsViewHolder(itemView: ComponentProductItemLayout
             "Rain Coat" -> icon.setImageResource(R.drawable.icon_item_raincoat)
         }
 
-        if (selectable) card.strokeWidth = if (isSelected) itemView.rootView.resources.getDimensionPixelSize(R.dimen.selected_stroke_width).toFloat().toInt() else 0
+
+        card.strokeWidth = if (isSelected) itemView.rootView.resources.getDimensionPixelSize(R.dimen.selected_stroke_width).toFloat().toInt() else 0
     }
 
 }

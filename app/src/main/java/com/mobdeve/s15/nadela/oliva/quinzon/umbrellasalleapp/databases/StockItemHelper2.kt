@@ -37,44 +37,39 @@ class StockItemHelper2 {
             }
         }
 
-        suspend fun getAvailableItem(station: String, item: String): MutableList<DocumentSnapshot> = suspendCoroutine {continuation ->
-            try {
-                val db = FirebaseFirestore.getInstance()
+        suspend fun getAvailableItem(station: String, item: String): MutableList<DocumentSnapshot> = withContext(
+            Dispatchers.IO) {
+                try {
+                    val db = FirebaseFirestore.getInstance()
+                    var querySnapshot =
+                        db.collection("Stations")
+                            .whereEqualTo("name", station)
+                            .limit(1)
+                            .get().await()
 
-                var querySnapshot =
-                    db.collection("Stations")
-                        .whereEqualTo("name", station)
-                        .limit(1)
-                        .get().result
 
+                    if (querySnapshot.documents.isEmpty()) throw Exception()
+                    val stationID = querySnapshot.documents.first().id
 
-                if (querySnapshot.documents.isEmpty()) throw Exception()
-                val stationID = querySnapshot.documents.first().id
+                    querySnapshot =
+                        db.collection("Items")
+                            .whereEqualTo("station", stationID)
+                            .whereEqualTo("itemCategory", item)
+                            .whereEqualTo("requested", false)
+                            .limit(1)
+                            .get().await()
 
-                querySnapshot =
-                    db.collection("Items")
-                        .whereEqualTo("station", stationID)
-                        .whereEqualTo("itemCategory", item)
-                        .whereEqualTo("requested", false)
-                        .limit(1)
-                        .get().result
+                    if (querySnapshot.documents.isEmpty()) throw Exception()
+                    Log.d("querySnapshot", querySnapshot.documents.first().id)
 
-                if (querySnapshot.documents.isEmpty()) throw Exception()
-                Log.d("querySnapshot", querySnapshot.documents.first().id)
+                    return@withContext querySnapshot.documents
+                } catch (e: Exception) {
+                    // Handle exceptions
+                    return@withContext mutableListOf()
+                }
 
-                continuation.resume(querySnapshot.documents)
-            } catch (e: Exception) {
-                // Handle exceptions
-                continuation.resume(mutableListOf())
-            }
         }
 
-
-
-
-//            withContext(
-//            Dispatchers.IO) {
-//
 
 
 

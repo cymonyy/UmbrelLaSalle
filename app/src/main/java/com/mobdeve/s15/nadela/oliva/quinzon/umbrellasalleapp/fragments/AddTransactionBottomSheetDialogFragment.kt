@@ -23,7 +23,9 @@ import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databases.StockItem
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databases.TransactionsHelper
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.StudentAddTransactionBinding
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.TransactionModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -40,7 +42,10 @@ class AddTransactionBottomSheetDialogFragment(private val userID: String): Botto
     private lateinit var dateSelected: TextView
     private lateinit var submitButton: CardView
 
-    private var availableItems: MutableList<String> = mutableListOf()
+    //mapping of available items Pair(item:String, selected:Boolean = false)
+    private var availableItems: MutableList<MutableMap.MutableEntry<String, Boolean>> = mutableListOf()
+
+
     private var requestedItems: MutableMap<String, String> = mutableMapOf()
     private var mListener: BottomSheetListener? = null
     private var year: Int = 0
@@ -96,10 +101,10 @@ class AddTransactionBottomSheetDialogFragment(private val userID: String): Botto
         // Handle the data on the main thread
         for(document in  documents){
             Log.d("document", document.id)
-            availableItems.add(document.get("name").toString())
-            Log.d("document", availableItems.last())
+            val map = mutableMapOf(document.get("itemCategory").toString() to false)
+            availableItems.add(map.entries.first())
+            Log.d("document", availableItems.last().key)
         }
-
     }
 
 
@@ -121,60 +126,67 @@ class AddTransactionBottomSheetDialogFragment(private val userID: String): Botto
 
         submitButton.setOnClickListener{
             try {
+
                 if (dateSelected.text.isEmpty()) throw Exception("ERROR: Please Input an Expected Return Date.")
-                if (itemsAdapter.getSelectedItems().isEmpty()) throw Exception("ERROR: Please Select at Least One Item.")
-                var transaction = createTransaction(dropDown.text.toString(), itemsAdapter.getSelectedItems())
 
-                lifecycleScope.launch(Dispatchers.Main) {
-                    transaction = TransactionsHelper.addStudentTransaction(transaction)
-                }
+                var i = 0
+                availableItems.forEach { item -> if (!item.value) i++ }
+                if (i == availableItems.size) throw Exception("ERROR: Please Select at Least One Item.")
 
-                mListener?.onDataSent(transaction)
+                submitTransaction(viewBinding.actvDropdownItem.text.toString())
                 dismiss()
-
             }catch (e: Exception){
                 Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
             }
         }
 
-
-
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     @Throws(Exception::class)
-    private fun createTransaction(station: String, items: MutableSet<String>): TransactionModel {
+    private fun submitTransaction(station: String) {
 
         val timeZone = TimeZone.getTimeZone("Asia/Singapore")
         val calendar = Calendar.getInstance(timeZone)
 
         Log.d("STATIONCREATE", station)
+        Log.d("ITEMSCREATE", availableItems.toList().toString())
 
+        GlobalScope.launch(Dispatchers.Main) {
 
-        //EDIT THIS SHIT
-        lifecycleScope.launch(Dispatchers.Main) {
             requestedItems = mutableMapOf()
-            for (item in items){
-                Log.d("ITEMSCREATE", item)
-                val documents = StockItemHelper2.getAvailableItem(station, item)
-                if (documents.isEmpty()) throw Exception("ERROR: No available $item at the moment. Please try again later.")
-                requestedItems[item] = documents.first().id
+            for (item in availableItems.toList()){
+                if (item.value){
+                    Log.d("ITEMSCREATE", item.key)
+                    val documents = withContext(Dispatchers.IO) {
+                        StockItemHelper2.getAvailableItem(station, item.key)
+                    }
+                    if (documents.isEmpty()) throw Exception("ERROR: No available ${item.key} at the moment. Please try again later.")
+                    requestedItems[item.key] = documents.first().id
+                    Log.d("ITEMSCREATED", requestedItems[item.key].toString())
+                }
             }
+
+            Log.d("REQUEST_ITEMS", requestedItems.toString())
+
+
+            val transaction = TransactionModel(
+                userID,
+                station,
+                "Requested",
+                "${calendar.get(Calendar.DAY_OF_MONTH)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}",
+                dateSelected.text.toString(),
+                "",
+                requestedItems,
+                "",
+                ""
+            )
+
+            mListener?.onDataSent(TransactionsHelper.addStudentTransaction(transaction))
+
         }
 
         Log.d("REQUEST_ITEMS", requestedItems.keys.toString())
-
-        return TransactionModel(
-            userID,
-            station,
-            "Requested",
-            "${calendar.get(Calendar.DAY_OF_MONTH)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}",
-            dateSelected.text.toString(),
-            "",
-            requestedItems,
-            "",
-            ""
-        )
-
 
     }
 
@@ -276,17 +288,17 @@ class AddTransactionBottomSheetDialogFragment(private val userID: String): Botto
             }
     }
 
+
+
     private fun setupAvailableItems(){
 
         // Set up RecyclerView with the new adapter
         itemsAdapter = TransactionProductItemCardsAdapter(availableItems, object : TransactionProductItemCardsAdapter.OnItemClickListener {
-            override fun onItemClick(item: String) {
-                if (itemsAdapter.getSelectedItems().contains(item)) {
-                    itemsAdapter.getSelectedItems().remove(item)
-                } else {
-                    itemsAdapter.getSelectedItems().add(item)
-                }
+            override fun onItemClick(position: Int, selected: Boolean) {
+                val newEntry = mutableMapOf(availableItems[position].key to selected)
+                availableItems[position] = newEntry.entries.first()
             }
+
         })
 
         viewBinding.rvAvailableItems.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

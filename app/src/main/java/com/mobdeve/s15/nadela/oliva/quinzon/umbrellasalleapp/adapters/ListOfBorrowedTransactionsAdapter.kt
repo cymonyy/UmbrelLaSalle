@@ -1,17 +1,35 @@
 package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.adapters
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.databinding.StudentTransactionItemLayoutBinding
+import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.fragments.EditTransactionBottomSheetDialogFragment
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.holders.ListOfBorrowedTransactionsViewHolder
 import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.models.TransactionModel
 
 class ListOfBorrowedTransactionsAdapter(private var data: MutableList<TransactionModel>): Adapter<ListOfBorrowedTransactionsViewHolder>() {
+
+    interface ScrollToPositionCallback {
+        fun onScrollToPosition(position: Int)
+    }
+
+    private var callback: ScrollToPositionCallback? = null
+
+    fun setScrollToPositionCallback(callback: ScrollToPositionCallback?) {
+        this.callback = callback
+    }
+
+    fun smoothScrollToPosition(position: Int) {
+        if (callback != null) {
+            callback!!.onScrollToPosition(position)
+        }
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -31,6 +49,29 @@ class ListOfBorrowedTransactionsAdapter(private var data: MutableList<Transactio
 
     override fun onBindViewHolder(holder: ListOfBorrowedTransactionsViewHolder, position: Int) {
         holder.bindData(data[position])
+
+        holder.itemView.setOnClickListener{
+            showBottomSheetDialog(holder.itemView.context, position, data[position])
+        }
+    }
+
+    private fun showBottomSheetDialog(context: Context, position: Int, transaction: TransactionModel) {
+        // Use BottomSheetFragment with view binding
+        val bottomSheetFragment = EditTransactionBottomSheetDialogFragment(transaction)
+        bottomSheetFragment.setBottomSheetListener(object : EditTransactionBottomSheetDialogFragment.BottomSheetListener {
+            override fun onDataSent(transaction: TransactionModel) {
+                updateTransactionItem(position, transaction)
+                this@ListOfBorrowedTransactionsAdapter.smoothScrollToPosition(position)
+            }
+        })
+        val fragmentManager = (context as FragmentActivity).supportFragmentManager
+        bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
+    }
+
+    //  Handles updating a media item in the array list + updates the UI accordingly.
+    private fun updateTransactionItem(position: Int, transaction: TransactionModel) {
+        data[position] = transaction
+        notifyItemChanged(position)
     }
 
     @SuppressLint("NotifyDataSetChanged")

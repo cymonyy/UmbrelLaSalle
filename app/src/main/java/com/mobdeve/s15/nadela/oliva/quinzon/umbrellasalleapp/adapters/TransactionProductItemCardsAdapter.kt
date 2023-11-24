@@ -10,29 +10,38 @@ import com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp.holders.Transaction
 
 class TransactionProductItemCardsAdapter() : Adapter<TransactionProductItemCardsViewHolder>() {
 
-    private lateinit var data: MutableList<String>
+    private lateinit var data: MutableList<MutableMap.MutableEntry<String, Boolean>>
     private lateinit var onItemClickListener: OnItemClickListener
-    private var selectedItems = mutableSetOf<String>()
     private var selectable: Boolean = false
 
     interface OnItemClickListener {
-        fun onItemClick(item: String)
+        fun onItemClick(position: Int, selected: Boolean)
     }
 
-    constructor(requestItems: MutableList<String>) : this() {
+    constructor(requestItems: MutableList<MutableMap.MutableEntry<String, Boolean>>) : this() {
         this.data = requestItems
+
     }
 
-    constructor(requestItems: MutableList<String>, onItemClickListener: Any) : this() {
-        this.data = requestItems
+    constructor(items: MutableList<MutableMap.MutableEntry<String, Boolean>>, onItemClickListener: Any) : this() {
+        this.data = items
         this.onItemClickListener = onItemClickListener as OnItemClickListener
         this.selectable = true
     }
+
+    constructor(selectable: Boolean, items: MutableList<MutableMap.MutableEntry<String, Boolean>>, onItemClickListener: Any) : this() {
+        this.data = items
+        this.onItemClickListener = onItemClickListener as OnItemClickListener
+        this.selectable = selectable
+    }
+
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): TransactionProductItemCardsViewHolder {
+
         val itemViewBinding: ComponentProductItemLayoutBinding = ComponentProductItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -47,24 +56,27 @@ class TransactionProductItemCardsAdapter() : Adapter<TransactionProductItemCards
     }
 
     override fun onBindViewHolder(holder: TransactionProductItemCardsViewHolder, position: Int) {
-        val item = data[position]
-        val isSelected = selectedItems.contains(item)
+        val item = data[position].key
+        val isSelected = data[position].value
+
+        //if not editMode, do not make a border
+        //else make a border
         holder.bindData(item, isSelected, selectable)
 
         if (selectable){
             holder.itemView.isSelected = isSelected
             holder.itemView.setOnClickListener{
-                onItemClickListener.onItemClick(item)
+                onItemClickListener.onItemClick(position, !isSelected)
                 notifyItemChanged(position)
             }
         }
+
+
     }
 
-    fun getSelectedItems(): MutableSet<String> = selectedItems
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newData: MutableList<String>) {
-        this.selectedItems = mutableSetOf()
+    fun updateData(newData: MutableList<MutableMap.MutableEntry<String, Boolean>>) {
         this.data = newData
         Log.d("DataSetAfter", data.last().toString())
         notifyDataSetChanged()
